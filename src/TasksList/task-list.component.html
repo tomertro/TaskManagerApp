@@ -1,0 +1,50 @@
+<div class="container mt-4" [attr.dir]="currentDirection">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1">{{ t('tasksHeading') }}</h2>
+      <p class="text-muted mb-0">{{ t('tasksSubtitle') }}</p>
+    </div>
+    <span class="badge bg-primary">{{ t('tasksBadge') }}</span>
+  </div>
+
+  <ng-container *ngIf="tasks$ | async as tasks; else loadingTasks">
+    <div *ngIf="tasks.length; else noTasks" class="table-responsive">
+      <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">{{ t('tableId') }}</th>
+            <th scope="col">{{ t('tableTitle') }}</th>
+            <th scope="col">{{ t('tableDescription') }}</th>
+            <th scope="col">{{ t('tablePriority') }}</th>
+            <th scope="col">{{ t('tableStatus') }}</th>
+            <th scope="col">{{ t('tableDueDate') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks; trackBy: trackByTaskId">
+            <th scope="row">{{ task.id }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description || t('noDescription') }}</td>
+            <td>{{ getPriorityLabel(task.priority) }}</td>
+            <td>
+              <span class="badge rounded-pill" [ngClass]="{
+                'bg-success': task.status === 2,
+                'bg-warning text-dark': task.status === 1,
+                'bg-secondary': task.status === 0
+              }">{{ getStatusLabel(task.status) }}</span>
+            </td>
+            <td>{{ task.dueDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingTasks>
+    <div class="alert alert-info">{{ t('loadingTasks') }}</div>
+  </ng-template>
+
+  <ng-template #noTasks>
+    <div class="alert alert-secondary">{{ t('noTasks') }}</div>
+  </ng-template>
+</div>

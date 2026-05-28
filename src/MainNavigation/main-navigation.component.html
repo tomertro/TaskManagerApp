@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" [attr.dir]="currentDirection">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">{{ t('pageTitle') }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavigation">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/add-task" routerLinkActive="active">{{ t('navAddTask') }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/app-task-list" routerLinkActive="active">{{ t('navViewTasks') }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- <div class="container mt-4">
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">Task Manager</h1>
+      <p class="col-md-8 fs-4">Manage your tasks with quick navigation to adding and reviewing tasks.</p>
+    </div>
+  </div>
+</div> -->

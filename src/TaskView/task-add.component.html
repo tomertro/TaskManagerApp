@@ -1,0 +1,61 @@
+<div class="task-add-page py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <h2 class="card-title fw-bold mb-2">{{ t('pageTitle') }}</h2>
+              <p class="text-muted mb-0">{{ t('subtitle') }}</p>
+            </div>
+
+            <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" novalidate>
+              <div class="mb-3">
+                <label class="form-label" for="taskTitle">{{ t('taskTitle') }}</label>
+                <input id="taskTitle" formControlName="title" type="text" class="form-control" [placeholder]="t('taskTitlePlaceholder')" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="taskDescription">{{ t('taskDescription') }}</label>
+                <textarea id="taskDescription" formControlName="description" class="form-control" rows="4" [placeholder]="t('taskDescriptionPlaceholder')"></textarea>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="taskPriority">{{ t('priority') }}</label>
+                  <select id="taskPriority" formControlName="priority" class="form-select">
+                    <option value="">{{ t('selectOption') }}</option>
+                    <option *ngFor="let option of priorityOptions" [ngValue]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="taskStatus">{{ t('status') }}</label>
+                  <select id="taskStatus" formControlName="status" class="form-select">
+                    <option value="">{{ t('selectOption') }}</option>
+                    <option *ngFor="let option of statusOptions" [ngValue]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-4 mt-3">
+                <label class="form-label" for="taskDueDate">{{ t('dueDate') }}</label>
+                <input id="taskDueDate" formControlName="dueDate" type="date" class="form-control" />
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="!taskForm.valid">
+                  {{ t('addTaskButton') }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

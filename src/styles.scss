@@ -1,8 +1,22 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
   background: #f5f7fb;
   color: #202124;
+}
+
+body[dir="rtl"] {
+  direction: rtl;
+}
+
+body[dir="rtl"] .card,
+body[dir="rtl"] .card-body,
+body[dir="rtl"] .form-control,
+body[dir="rtl"] .form-select,
+body[dir="rtl"] .btn {
+  text-align: right;
 }
 
 app-root {
