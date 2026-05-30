@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class TaskService {
   private readonly offlineMode = environment.offlinemode;
+  private readonly baseUrl = environment.serverUrl.replace(/\/+$/, '');
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +19,25 @@ export class TaskService {
       return of(task);
     }
 
-    return this.http.post<Task>('/addTask', task);
+    return this.http.post<Task>(`${this.baseUrl}/api/task`, task);
+  }
+
+  updateTask(task: Task): Observable<Task> {
+    if (this.offlineMode) {
+      return of(task);
+    }
+
+    return this.http.put<Task>(`${this.baseUrl}/api/task/${task.id}`, task);
+  }
+
+  deleteTask(taskId: string): Observable<string> {
+    if (this.offlineMode) {
+      return of(taskId);
+    }
+
+    return this.http.delete<void>(`${this.baseUrl}/api/task/${taskId}`).pipe(
+      map(() => taskId)
+    );
   }
 
   getTasks(): Observable<Task[]> {
@@ -28,7 +47,7 @@ export class TaskService {
       );
     }
 
-    return this.http.get<Task[]>('/getTasks');
+    return this.http.get<Task[]>(`${this.baseUrl}/api/task`);
   }
 
   private mapOfflineTask(task: any): Task {
@@ -36,40 +55,12 @@ export class TaskService {
       id: String(task.id),
       title: task.title,
       description: task.description,
-      priority: this.mapPriority(task.priority),
+      priority: task.priority,
       dueDate: task.dueDate,
-      status: this.mapStatus(task.status)
+      status: task.status
     };
   }
 
-  private mapPriority(priority: string | number): TaskPriority {
-    switch (String(priority).trim().toLowerCase()) {
-      case 'גבוהה':
-      case 'high':
-        return TaskPriority.High;
-      case 'בינונית':
-      case 'medium':
-        return TaskPriority.Medium;
-      case 'נמוכה':
-      case 'low':
-      default:
-        return TaskPriority.Low;
-    }
-  }
 
-  private mapStatus(status: string | number): TaskStatus {
-    switch (String(status).trim().toLowerCase()) {
-      case 'בתהליך':
-      case 'inprogress':
-      case 'in progress':
-        return TaskStatus.InProgress;
-      case 'הושלם':
-      case 'done':
-        return TaskStatus.Done;
-      case 'ממתין':
-      case 'todo':
-      default:
-        return TaskStatus.Todo;
-    }
-  }
+
 }

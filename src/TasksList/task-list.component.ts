@@ -5,7 +5,7 @@ import { LocaleService } from '../app/i18n/locale.service';
 import { translations } from '../app/i18n/translations';
 import { Task, TaskPriority, TaskStatus } from '../Model/task';
 import { AppState } from '../store/app.state';
-import { GetTasks } from '../store/task.actions';
+import { DeleteTask, GetTasks } from '../store/task.actions';
 import { TasksSelector } from '../store/task.selectors';
 
 @Component({
@@ -60,5 +60,8 @@ export class TaskListComponent implements OnInit {
 
   trackByTaskId(index: number, task: Task): string {
     return task.id;
+  }
+  onDelete(taskId: string) {
+   this.store.dispatch(new DeleteTask(taskId));
   }
 }

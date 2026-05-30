@@ -4,6 +4,12 @@ export enum TaskActionType {
   AddTask = '[Task] Add Task',
   AddTaskSuccess = '[Task] Add Task Success',
   AddTaskFailure = '[Task] Add Task Failure',
+  UpdateTask = '[Task] Update Task',
+  UpdateTaskSuccess = '[Task] Update Task Success',
+  UpdateTaskFailure = '[Task] Update Task Failure',
+  DeleteTask = '[Task] Delete Task',
+  DeleteTaskSuccess = '[Task] Delete Task Success',
+  DeleteTaskFailure = '[Task] Delete Task Failure',
   GetTasks = '[Task] Get Tasks',
   GetTasksSuccess = '[Task] Get Tasks Success',
   GetTasksFailure = '[Task] Get Tasks Failure'
@@ -27,6 +33,42 @@ export class AddTaskFailure {
   constructor(public payload: string) {}
 }
 
+export class UpdateTask {
+  readonly type = TaskActionType.UpdateTask;
+
+  constructor(public payload: Task) {}
+}
+
+export class UpdateTaskSuccess {
+  readonly type = TaskActionType.UpdateTaskSuccess;
+
+  constructor(public payload: Task) {}
+}
+
+export class UpdateTaskFailure {
+  readonly type = TaskActionType.UpdateTaskFailure;
+
+  constructor(public payload: string) {}
+}
+
+export class DeleteTask {
+  readonly type = TaskActionType.DeleteTask;
+
+  constructor(public payload: string) {}
+}
+
+export class DeleteTaskSuccess {
+  readonly type = TaskActionType.DeleteTaskSuccess;
+
+  constructor(public payload: string) {}
+}
+
+export class DeleteTaskFailure {
+  readonly type = TaskActionType.DeleteTaskFailure;
+
+  constructor(public payload: string) {}
+}
+
 export class GetTasks {
   readonly type = TaskActionType.GetTasks;
 }
@@ -43,4 +85,4 @@ export class GetTasksFailure {
   constructor(public payload: string) {}
 }
 
-export type TaskActions = AddTask | AddTaskSuccess | AddTaskFailure | GetTasks | GetTasksSuccess | GetTasksFailure;
+export type TaskActions = AddTask | AddTaskSuccess | AddTaskFailure | UpdateTask | UpdateTaskSuccess | UpdateTaskFailure | DeleteTask | DeleteTaskSuccess | DeleteTaskFailure | GetTasks | GetTasksSuccess | GetTasksFailure;

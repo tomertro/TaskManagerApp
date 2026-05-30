@@ -3,24 +3,24 @@
     "id": 1,
     "title": "לתכנן פגישה עם הלקוח",
     "description": "לדון על לוח הזמנים והדרישות",
-    "status": "בתהליך",
-    "priority": "גבוהה",
+    "status": 1,
+    "priority": 0,
     "dueDate": "2026-06-01"
   },
   {
     "id": 2,
     "title": "לבדוק דוח ביצועים",
     "description": "סקירת נתונים חודשיים והערכת מגמות",
-    "status": "ממתין",
-    "priority": "בינונית",
+    "status": 0,
+    "priority": 1,
     "dueDate": "2026-06-03"
   },
   {
     "id": 3,
     "title": "עדכון מסמך פרויקט",
     "description": "הוספת הערות אחרונות ושינויים אחרונים",
-    "status": "הושלם",
-    "priority": "נמוכה",
+    "status": 2,
+    "priority": 2,
     "dueDate": "2026-05-28"
   }
 ]

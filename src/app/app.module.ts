@@ -6,14 +6,17 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TaskAddComponent } from '../TaskView/task-add.component';
+
 import { TaskListComponent } from '../TasksList/task-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { taskReducer } from '../store/task.reducer';
 import { TaskEffects } from '../store/task.effects';
+import { TaskEditComponent } from 'src/TaskEdit/task-edit.component';
 
 @NgModule({
   declarations: [
     TaskAddComponent,
+    TaskEditComponent,
     TaskListComponent
   ],
   imports: [

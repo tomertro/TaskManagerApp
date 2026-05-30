@@ -5,7 +5,7 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TaskService } from '../app/services/task.service';
 import { AppState } from './app.state';
-import { AddTask, AddTaskFailure, AddTaskSuccess, GetTasks, GetTasksFailure, GetTasksSuccess, TaskActionType } from './task.actions';
+import { AddTask, AddTaskFailure, AddTaskSuccess, DeleteTask, DeleteTaskFailure, DeleteTaskSuccess, GetTasks, GetTasksFailure, GetTasksSuccess, TaskActionType, UpdateTask, UpdateTaskFailure, UpdateTaskSuccess } from './task.actions';
 import { TasksSelector } from './task.selectors';
 
 @Injectable()
@@ -17,6 +17,30 @@ export class TaskEffects {
         this.taskService.addTask(action.payload).pipe(
           map((task) => new AddTaskSuccess(task)),
           catchError((error) => of(new AddTaskFailure(error?.message || 'Failed to add task')))
+        )
+      )
+    )
+  );
+
+  updateTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActionType.UpdateTask),
+      switchMap((action: UpdateTask) =>
+        this.taskService.updateTask(action.payload).pipe(
+          map((task) => new UpdateTaskSuccess(task)),
+          catchError((error) => of(new UpdateTaskFailure(error?.message || 'Failed to update task')))
+        )
+      )
+    )
+  );
+
+  deleteTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActionType.DeleteTask),
+      switchMap((action: DeleteTask) =>
+        this.taskService.deleteTask(action.payload).pipe(
+          map((taskId) => new DeleteTaskSuccess(taskId)),
+          catchError((error) => of(new DeleteTaskFailure(error?.message || 'Failed to delete task')))
         )
       )
     )
