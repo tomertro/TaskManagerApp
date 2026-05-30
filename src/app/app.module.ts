@@ -12,9 +12,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { taskReducer } from '../store/task.reducer';
 import { TaskEffects } from '../store/task.effects';
 import { TaskEditComponent } from 'src/TaskEdit/task-edit.component';
+import { MainNavigationComponent } from 'src/MainNavigation/main-navigation.component';
 
 @NgModule({
   declarations: [
+    AppComponent,
     TaskAddComponent,
     TaskEditComponent,
     TaskListComponent
@@ -23,7 +25,7 @@ import { TaskEditComponent } from 'src/TaskEdit/task-edit.component';
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppComponent,
+    MainNavigationComponent,
     AppRoutingModule,
     StoreModule.forRoot({
       tasks: taskReducer

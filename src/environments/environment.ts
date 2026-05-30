@@ -7,5 +7,5 @@ export const environment: {
   production: false,
   language: 'he-IL',
   offlinemode: true,
-  serverUrl: 'http://localhost:7032'
+  serverUrl: 'http://localhost:5150'
 };

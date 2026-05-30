@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Subscriber, Subscription } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { LocaleService } from '../app/i18n/locale.service';
 import { translations } from '../app/i18n/translations';
@@ -19,7 +19,7 @@ import { selectTaskById } from '../store/task.selectors';
 })
 export class TaskEditComponent implements OnInit, OnDestroy {
   taskForm: FormGroup;
-  private destroy$ = new Subject<void>();
+ 
 
   statusOptions = [
     { value: TaskStatus.Todo, label: this.localeService.t('statusTodo') },
@@ -32,7 +32,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     { value: TaskPriority.Medium, label: this.localeService.t('priorityMedium') },
     { value: TaskPriority.High, label: this.localeService.t('priorityHigh') }
   ];
-
+  
+  taskId:any = '';
+  subscribers:Array<Subscription> = [];
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
@@ -50,21 +53,20 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.pipe(
-      map((params) => params.get('id')),
-      filter((id): id is string => !!id),      
-      switchMap((id) => this.store.select(selectTaskById(id))),
-      takeUntil(this.destroy$)
-    ).subscribe((task) => {
-      if (task) {
-        this.taskForm.patchValue(task);
+  this.subscribers.push( this.activatedRoute.paramMap.subscribe(param=>{
+        this.taskId = param.get('id');
+     }))  ;
+  this.subscribers.push( this.store.select(selectTaskById(this.taskId)).subscribe(t=>{
+    if (t) {
+        this.taskForm.patchValue(t);
       }
-    });
+  }))
+  
+   
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.subscribers.forEach(item => item.unsubscribe());
   }
 
   get currentDirection(): 'rtl' | 'ltr' {

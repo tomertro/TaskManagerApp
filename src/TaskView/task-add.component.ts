@@ -6,6 +6,7 @@ import { translations } from '../app/i18n/translations';
 import { Task, TaskPriority, TaskStatus } from '../Model/task';
 import { AppState } from '../store/app.state';
 import { AddTask } from '../store/task.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-add',
@@ -28,7 +29,7 @@ export class TaskAddComponent {
   constructor(
     private fb: FormBuilder,
     private localeService: LocaleService,
-    private store: Store<AppState>
+    private store: Store<AppState>,private router:Router
   ) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
@@ -61,7 +62,7 @@ export class TaskAddComponent {
       };
 
       this.store.dispatch(new AddTask(task));
-      this.taskForm.reset();
+      this.router.navigate(['/']);
     }
   }
 }
